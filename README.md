@@ -63,10 +63,40 @@
 	100			66.16
 	365			97.61
 ---------------------------------------------------------------------------------
+# Transmission BT下载服务
+
+系统集成了BT下载工具Transmission，下载磁力或种子文件时，如果有其他节点完成了下载，本节点可实现秒下
+- 秒下实现是直接将文件对应的根CID保存到本地，实际文件内容在其他分布式节点上
+- 秒下完成后Transmission触发自动校验，会同步数据到本地，如网络环境较差可能导致校验失败，但不影响文件的正常使用
+- 下载完成后，可能因为本地缓存清理，导致Transmission校验报错，影响继续做种，可手动执行校验重新缓存文件到本地
+
+![预览](https://raw.githubusercontent.com/zhangv2012/xfile/main/4.png)
 
 # 安装方式
 
 ### docker
+|端口|说明|
+|---|---|
+|8081|webdav服务端口|
+|9081|Transmission web端口|
+|7681|Xfile webUI 端口|
+```
+docker run -d \
+  --name xfile \
+  --restart always \
+  --privileged=true \
+  --network bridge \
+  -p 8081:8081 \
+  -p 9091:9091 \
+  -p 7681:7681 \
+  --memory 2g \
+  --cap-add NET_ADMIN \
+  --cap-add SYS_ADMIN \
+  --cap-add MKNOD \
+  -v /共享网盘/data:/data \
+  --device /dev/fuse:/dev/fuse \
+  zhangv2012/xfile:1.0.0
+```
 ```
 
 docker run -d \
@@ -153,6 +183,9 @@ services:
 
 ---------------
 ## 项目预览 
+
 ![预览1](https://raw.githubusercontent.com/zhangv2012/xfile/main/1.png)
+
 ![预览2](https://raw.githubusercontent.com/zhangv2012/xfile/main/2.png)
+
 ![预览3](https://raw.githubusercontent.com/zhangv2012/xfile/main/3.png)
