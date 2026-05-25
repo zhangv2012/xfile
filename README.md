@@ -17,6 +17,7 @@
 
 - XFile 节点支持通过 WebDav 协议将存储挂载至本地设备或 NAS 服务器，轻松解锁海量无限存储空间。
 - 为激励用户贡献本地缓存资源，维护分布式共享网络稳定健康运转，平台设立运行考核机制，指标未达标WebDav服务限制使用。
+- 新用户有30天的考核豁免期，在豁免期内不受任何考核指标的限制，用户需在考核期能完成所有的考核指标达标，否则30天后  webdav服务将不提供数据读取服务
 - 具体规则如下：
 
 |考核项目|限制阈值|触发结果|
@@ -95,7 +96,7 @@ docker run -d \
   --cap-add MKNOD \
   -v /共享网盘/data:/data \
   --device /dev/fuse:/dev/fuse \
-  zhangv2012/xfile:1.0.0
+  zhangv2012/xfile:latest
 ```
 ```
 
@@ -110,7 +111,7 @@ docker run -d \
   --cap-add MKNOD \
   -v /共享网盘/data:/data \
   --device /dev/fuse:/dev/fuse \
-  zhangv2012/xfile:1.0.0
+  zhangv2012/xfile:latest
 
 ```
 ### docker compose
@@ -118,7 +119,7 @@ docker run -d \
 
 services:
   xfile:
-    image: zhangv2012/xfile:1.0.0
+    image: zhangv2012/xfile:latest
     container_name: xfile
     restart: always
     privileged: true
